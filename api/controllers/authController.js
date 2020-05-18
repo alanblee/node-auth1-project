@@ -60,3 +60,23 @@ module.exports.loginUser = async (req, res) => {
     });
   }
 };
+
+//GET - LOGOUT
+module.exports.logoutUser = (req, res) => {
+  if (req.session) {
+    req.session.destroy((err) => {
+      if (err) {
+        res
+          .status(500)
+          .json({
+            message: "Error logging out, please try again",
+            err: err.message,
+          });
+      } else {
+        res.status(204).end();
+      }
+    });
+  } else {
+    res.status(204).end();
+  }
+};

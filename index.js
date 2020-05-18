@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const requireLogin = require("./middlewares/requireLogin").requireLogin;
 
 const sessionConfig = {
   cookie: {
@@ -19,6 +20,7 @@ const sessionConfig = {
 // create a session and send a cookie back (the cookie will store the session id)
 app.use(session(sessionConfig)); // turn on sessions for the API
 
+
 //import routes
 const authRoutes = require("./api/routes/authRoutes");
 const userRoutes = require("./api/routes/userRoutes");
@@ -29,7 +31,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //config routes
 app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
+//config requirelogin
+app.use(requireLogin);
+app.use("/api/users", requireLogin, userRoutes);
 
 app.get("/", (req, res) => {
   res.send("backend ready");

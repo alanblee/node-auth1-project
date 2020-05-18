@@ -8,4 +8,7 @@ router.route("/login").post(authCtrl.loginUser);
 // POST - REGISTER
 router.route("/register").post(authCtrl.registerUser);
 
+// GET - LOGOUT
+router.route("/logout").get(authCtrl.logoutUser);
+
 module.exports = router;
