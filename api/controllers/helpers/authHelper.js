@@ -18,7 +18,6 @@ const addUser = async (user) => {
   } else {
     try {
       const [newUserId] = await db("users").returning("id").insert(user);
-      console.log(newUserId);
       return findById(Number(newUserId));
     } catch (err) {
       throw err;

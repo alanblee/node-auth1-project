@@ -32,3 +32,29 @@ module.exports.registerUser = async (req, res) => {
     });
   }
 };
+
+//POST - LOGIN
+module.exports.loginUser = async (req, res) => {
+  const { username, password } = req.body;
+  if (isValid(req.body)) {
+    try {
+      const [user] = await Users.findBy({ username });
+      if (user && bcryptjs.compareSync(password, user.password)) {
+        req.session.loggedIn = true;
+        req.session.user = user;
+
+        res
+          .status(200)
+          .json({ message: `Welcome to the API ${user.username}` });
+      } else {
+        res.status(401).json({ message: "Invalid credentials" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  } else {
+    res.status(400).json({
+      message: "Please provide a username and password",
+    });
+  }
+};
