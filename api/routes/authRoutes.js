@@ -8,3 +8,4 @@ const authCtrl = require("../controllers/authController");
 // POST - REGISTER
 router.route("/register").post(authCtrl.registerUser);
 
+module.exports = router;

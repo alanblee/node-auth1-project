@@ -4,7 +4,7 @@ const isValid = require("../services/authServices").isValid;
 
 //POST - REGISTER
 module.exports.registerUser = async (req, res) => {
-  const { username, password } = req.body;
+  let { username, password } = req.body;
   if (isValid(req.body)) {
     const rounds = process.env.BCRYPT_ROUNDS || 8;
     // hash the password
@@ -17,12 +17,14 @@ module.exports.registerUser = async (req, res) => {
       };
       const newUser = await Users.addUser(userInfo);
       if (newUser.username) {
-        req.session.loggedIn === true;
+        // req.session.loggedIn = true;
 
-        res.status(201).json({ data: user });
+        res.status(201).json({ data: newUser });
+      } else {
+        res.status(400).json(newUser.message);
       }
     } catch (err) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ message: err.message });
     }
   } else {
     res.status(400).json({
