@@ -47,6 +47,8 @@ module.exports.loginUser = async (req, res) => {
           .status(200)
           .json({ message: `Welcome to the API ${user.username}` });
       } else {
+        req.session.loggedIn = false;
+        req.session.user = null;
         res.status(401).json({ message: "Invalid credentials" });
       }
     } catch (err) {
