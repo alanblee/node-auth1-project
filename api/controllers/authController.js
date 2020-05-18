@@ -17,8 +17,6 @@ module.exports.registerUser = async (req, res) => {
       };
       const newUser = await Users.addUser(userInfo);
       if (newUser.username) {
-        // req.session.loggedIn = true;
-
         res.status(201).json({ data: newUser });
       } else {
         res.status(400).json(newUser.message);
@@ -66,12 +64,10 @@ module.exports.logoutUser = (req, res) => {
   if (req.session) {
     req.session.destroy((err) => {
       if (err) {
-        res
-          .status(500)
-          .json({
-            message: "Error logging out, please try again",
-            err: err.message,
-          });
+        res.status(500).json({
+          message: "Error logging out, please try again",
+          err: err.message,
+        });
       } else {
         res.status(204).end();
       }
