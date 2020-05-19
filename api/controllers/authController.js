@@ -17,7 +17,7 @@ module.exports.registerUser = async (req, res) => {
       };
       const newUser = await Users.addUser(userInfo);
       if (newUser.username) {
-        res.status(201).json({ data: newUser });
+        res.status(201).json(newUser);
       } else {
         res.status(400).json(newUser.message);
       }
@@ -41,9 +41,7 @@ module.exports.loginUser = async (req, res) => {
         req.session.loggedIn = true;
         req.session.user = user;
 
-        res
-          .status(200)
-          .json({ message: `Welcome to the API ${user.username}` });
+        res.status(200).json({ id: user.id, username: user.username });
       } else {
         req.session.loggedIn = false;
         req.session.user = null;
