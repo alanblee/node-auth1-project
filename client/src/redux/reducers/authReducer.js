@@ -3,6 +3,7 @@ import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_ERROR,
+  GET_USER_LIST,
   LOADING_USER,
 } from "../types/authTypes";
 
@@ -11,6 +12,7 @@ const initialState = {
   loggedIn: false,
   errorMessage: "",
   loadingUser: false,
+  userList: undefined,
 };
 
 const loginUser = (state = initialState, payload) => {
@@ -40,9 +42,16 @@ const authError = (state = initialState, payload) => {
     errorMessage: payload,
   };
 };
+
+const getAllUsers = (state = initialState, payload) => {
+  return {
+    ...state,
+    userList: payload,
+  };
+};
 export default createReducer(initialState, {
   [LOGIN_USER]: loginUser,
-
+  [GET_USER_LIST]: getAllUsers,
   [AUTH_ERROR]: authError,
   [REGISTER_USER]: registerUser,
 });

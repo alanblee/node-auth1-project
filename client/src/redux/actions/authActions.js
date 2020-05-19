@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   AUTH_ERROR,
   LOADING_USER,
+  GET_USER_LIST,
 } from "../types/authTypes";
 
 export const loginUser = (credentials, redirect) => async (dispatch) => {
@@ -22,5 +23,16 @@ export const registerUser = (credentials, redirect) => async (dispatch) => {
     redirect();
   } catch (err) {
     dispatch({ type: AUTH_ERROR, payload: err.message });
+  }
+};
+
+export const getUsers = () => async (dispatch) => {
+  try {
+    const users = await axiosWithAuth().get("/api/users", {
+      withCredentials: true,
+    });
+    console.log(users);
+  } catch (err) {
+    console.log(err.message);
   }
 };

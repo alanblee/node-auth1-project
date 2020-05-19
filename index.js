@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const cors = require("cors");
 const requireLogin = require("./middlewares/requireLogin").requireLogin;
 
 const sessionConfig = {
@@ -20,7 +20,6 @@ const sessionConfig = {
 
 // create a session and send a cookie back (the cookie will store the session id)
 app.use(session(sessionConfig)); // turn on sessions for the API
-
 //import routes
 const authRoutes = require("./api/routes/authRoutes");
 const userRoutes = require("./api/routes/userRoutes");
@@ -29,6 +28,7 @@ const userRoutes = require("./api/routes/userRoutes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
+
 
 //config routes
 app.use("/api/auth", authRoutes);
