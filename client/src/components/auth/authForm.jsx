@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser, registerUser } from "../../redux/actions/authActions";
 import "./authForm.scss";
 
-const AuthForm = ({ authType }) => {
+const AuthForm = ({ authType, loginUser, registerUser }) => {
+  const { push } = useHistory();
   const [formInput, setFormInput] = useState({
     username: "",
     password: "",
@@ -16,7 +19,15 @@ const AuthForm = ({ authType }) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formInput);
+
+    if (!authType) {
+      loginUser(formInput);
+    } else if (authType === true) {
+      console.log('fure')
+      registerUser(formInput, () => {
+        push("/users");
+      });
+    }
   };
   return (
     <div className="auth-container">
@@ -51,4 +62,8 @@ const AuthForm = ({ authType }) => {
   );
 };
 
-export default AuthForm;
+const actions = {
+  loginUser,
+  registerUser,
+};
+export default connect(null, actions)(AuthForm);
