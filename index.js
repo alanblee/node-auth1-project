@@ -31,14 +31,14 @@ app.use(cors());
 
 
 //config routes
+  app.get("/", (req, res) => {
+    res.send("backend ready");
+  });
 app.use("/api/auth", authRoutes);
 //config requirelogin
 app.use(requireLogin);
 app.use("/api/users", requireLogin, userRoutes);
 
-app.get("/", (req, res) => {
-  res.send("backend ready");
-});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
