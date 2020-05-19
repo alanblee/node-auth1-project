@@ -30,10 +30,19 @@ const registerUser = (state = initialState, payload) => {
     };
   }
 };
-
+const authError = (state = initialState, payload) => {
+  localStorage.removeItem("token");
+  return {
+    ...state,
+    currentUser: null,
+    loggedIn: false,
+    loadingUser: false,
+    errorMessage: payload,
+  };
+};
 export default createReducer(initialState, {
   [LOGIN_USER]: loginUser,
-  // [LOADING_USER]: loadingUser,
-  // [AUTH_ERROR]: authError,
+
+  [AUTH_ERROR]: authError,
   [REGISTER_USER]: registerUser,
 });

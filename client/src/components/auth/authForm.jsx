@@ -21,11 +21,12 @@ const AuthForm = ({ authType, loginUser, registerUser }) => {
     event.preventDefault();
 
     if (!authType) {
-      loginUser(formInput);
-    } else if (authType === true) {
-      console.log('fure')
-      registerUser(formInput, () => {
+      loginUser(formInput, () => {
         push("/users");
+      });
+    } else if (authType === true) {
+      registerUser(formInput, () => {
+        push("/");
       });
     }
   };
@@ -39,6 +40,7 @@ const AuthForm = ({ authType, loginUser, registerUser }) => {
             name="username"
             value={formInput.username}
             onChange={handleChange}
+            required
           />
           <label>Username</label>
         </div>
@@ -48,15 +50,34 @@ const AuthForm = ({ authType, loginUser, registerUser }) => {
             name="password"
             value={formInput.password}
             onChange={handleChange}
+            required
           />
           <label>Password</label>
         </div>
-        {authType ? <button>Register</button> : <button>Login</button>}
-        {authType ? (
-          <Link to="/">Already have an account?</Link>
-        ) : (
-          <Link to="/register">Don't have an account?</Link>
-        )}
+        <div className="btn">
+          {authType ? (
+            <button>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>Register
+            </button>
+          ) : (
+            <button>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>Login
+            </button>
+          )}
+        </div>
+        <div className="link-to">
+          {authType ? (
+            <Link to="/">Already have an account?</Link>
+          ) : (
+            <Link to="/register">Don't have an account?</Link>
+          )}
+        </div>
       </form>
     </div>
   );
